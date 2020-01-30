@@ -10,6 +10,20 @@ spec:
   nodeSelector:
     kubernetes.io/os: linux
   replicas: 3
+  resources:
+    requests:
+      memory: 1Gi
+  retention: 240h
+  storage:
+    volumeClaimTemplate:
+      metadata:
+        name: altermanager-data
+      spec:
+        accessModes: [ "ReadWriteOnce" ]
+        storageClassName: "alicloud-disk-ssd"
+        resources:
+          requests:
+            storage: 20Gi
   securityContext:
     fsGroup: 2000
     runAsNonRoot: true

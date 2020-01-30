@@ -19,7 +19,18 @@ spec:
   replicas: 2
   resources:
     requests:
-      memory: 400Mi
+      memory: 1Gi
+  retention: 15d
+  storage:
+    volumeClaimTemplate:
+      metadata:
+        name: prometheus-data
+      spec:
+        accessModes: [ "ReadWriteOnce" ]
+        storageClassName: "alicloud-disk-ssd"
+        resources:
+          requests:
+            storage: 20Gi
   ruleSelector:
     matchLabels:
       prometheus: k8s
