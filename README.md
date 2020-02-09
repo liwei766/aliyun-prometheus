@@ -1,16 +1,16 @@
-alias k=‘kubectl’
+alias k=‘kubectl’  
 
-cd kube-prometheus
-k label node --all kubernetes.io/os=linux 
+cd kube-prometheus  
+k label node --all kubernetes.io/os=linux   
 
-k create -f manifests/setup
-until k get servicemonitors --all-namespaces ; do date; sleep 1; echo ""; done
+k create -f manifests/setup  
+until k get servicemonitors --all-namespaces ; do date; sleep 1; echo ""; done  
 
-k create -f manifests/
+k create -f manifests/  
 
 k -n monitoring exec -it $(k -n monitoring get po |grep grafana|awk {'if ($1 !~/^grafana-chown/) print $1'}) grafana-cli plugins install camptocamp-prometheus-alertmanager-datasource
 
-k -n monitoring scale deploy grafana --replicas=0
+k -n monitoring scale deploy grafana --replicas=0  
 k -n monitoring scale deploy grafana --replicas=1
 
 
